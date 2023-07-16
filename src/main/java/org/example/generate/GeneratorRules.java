@@ -17,10 +17,6 @@ public class GeneratorRules {
         this.additional = additional;
     }
 
-    public static GeneratorRulesBuilder builder(int count) {
-        return new GeneratorRulesBuilder(count);
-    }
-
     public static GeneratorRulesBuilder builder(int minLength, int maxLength) {
         return new GeneratorRulesBuilder(minLength, maxLength);
     }
@@ -29,44 +25,44 @@ public class GeneratorRules {
         return this.minLength;
     }
 
-    public int getMaxLength() {
-        return this.maxLength;
-    }
-
-    public boolean isAlphabetic() {
-        return this.alphabetic;
-    }
-
-    public boolean isNumeric() {
-        return this.numeric;
-    }
-
-    public boolean isSpecial() {
-        return this.special;
-    }
-
-    public char[] getAdditional() {
-        return this.additional;
-    }
-
     public void setMinLength(int minLength) {
         this.minLength = minLength;
+    }
+
+    public int getMaxLength() {
+        return this.maxLength;
     }
 
     public void setMaxLength(int maxLength) {
         this.maxLength = maxLength;
     }
 
+    public boolean isAlphabetic() {
+        return this.alphabetic;
+    }
+
     public void setAlphabetic(boolean alphabetic) {
         this.alphabetic = alphabetic;
+    }
+
+    public boolean isNumeric() {
+        return this.numeric;
     }
 
     public void setNumeric(boolean numeric) {
         this.numeric = numeric;
     }
 
+    public boolean isSpecial() {
+        return this.special;
+    }
+
     public void setSpecial(boolean special) {
         this.special = special;
+    }
+
+    public char[] getAdditional() {
+        return this.additional;
     }
 
     public void setAdditional(char... additional) {
@@ -74,17 +70,13 @@ public class GeneratorRules {
     }
 
     public static class GeneratorRulesBuilder {
+        private static final char[] EMPTY_CHARS = {};
         private final int minLength;
         private final int maxLength;
         private boolean alphabetic;
         private boolean numeric;
         private boolean special;
-        private char[] additional;
-
-        GeneratorRulesBuilder(int count) {
-            this.minLength = count;
-            this.maxLength = count;
-        }
+        private char[] additional = EMPTY_CHARS;
 
         GeneratorRulesBuilder(int minLength, int maxLength) {
             this.minLength = minLength;
@@ -106,8 +98,17 @@ public class GeneratorRules {
             return this;
         }
 
-        public GeneratorRulesBuilder additional(char[] additional) {
-            this.additional = additional;
+        public GeneratorRulesBuilder additional(char... additional) {
+            if (additional != null) {
+                this.additional = additional;
+            }
+            return this;
+        }
+
+        public GeneratorRulesBuilder additional(String additional) {
+            if (additional != null) {
+                this.additional = additional.toCharArray();
+            }
             return this;
         }
 

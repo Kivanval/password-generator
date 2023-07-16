@@ -5,7 +5,6 @@ import org.apache.commons.lang3.RandomUtils;
 public class SymbolicallyPasswordGenerator implements PasswordGenerator {
     private static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final String NUMBERS = "1234567890";
-
     private static final String SPECIALS = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
     @Override
