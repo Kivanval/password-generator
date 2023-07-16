@@ -29,25 +29,42 @@ public class ConsoleController implements Runnable {
     @Option(names = "--add", description = "Use additional symbols")
     private String additional;
 
+    @Option(names = {"-c", "--count"}, description = "Password count")
+    private int count = 1;
+
 
     @Override
     public void run() {
         validate();
 
-        GeneratorRules rules = GeneratorRules.builder(minLength, maxLength)
+        GeneratorRules.GeneratorRulesBuilder rulesBuilder = GeneratorRules.builder()
+                .minLength(minLength)
+                .maxLength(maxLength)
                 .alphabetic(alphabetic)
                 .numeric(numeric)
-                .special(special)
-                .additional(additional)
-                .build();
+                .special(special);
+        if(additional != null) {
+            rulesBuilder.additional(additional.toCharArray());
+        }
+        GeneratorRules rules = rulesBuilder.build();
 
         Injector injector = Guice.createInjector(new BasicModule());
         PasswordGenerator passwordGenerator = injector.getInstance(PasswordGenerator.class);
 
-        System.out.println(passwordGenerator.generate(rules));
+        String[] passwords = new String[count];
+        for(int i = 0; i < count; ++i) {
+            passwords[i] = passwordGenerator.generate(rules);
+        }
+
+        String result = String.join("\n", passwords);
+        System.out.println(result);
     }
 
     private void validate() {
+        if(count < 1) {
+            System.err.println("Count must be > 0");
+            System.exit(1);
+        }
         if (minLength <= 0) {
             System.err.println("Minimal length must be > 0");
             System.exit(1);
@@ -56,7 +73,7 @@ public class ConsoleController implements Runnable {
             System.err.println("Minimal length must be <= maximal length");
             System.exit(1);
         }
-        if (!alphabetic && !numeric && !special && additional == null || additional.length() == 0) {
+        if (!alphabetic && !numeric && !special && (additional == null || additional.length() == 0)) {
             System.err.println("Unable to create a password without symbols");
             System.exit(1);
         }

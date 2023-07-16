@@ -3,9 +3,9 @@ package org.example.generate;
 import org.apache.commons.lang3.RandomUtils;
 
 public class SymbolicallyPasswordGenerator implements PasswordGenerator {
-    private static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    private static final String LETTERS = "_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final String NUMBERS = "1234567890";
-    private static final String SPECIALS = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+    private static final String SPECIALS = "!#$%&()*+,-./:;<=>?@[\\]^{|}~";
 
     @Override
     public String generate(GeneratorRules rules) {
@@ -21,7 +21,7 @@ public class SymbolicallyPasswordGenerator implements PasswordGenerator {
         if (alphabetic) {
             if (numeric) {
                 if (special) {
-                    int randomValue = RandomUtils.nextInt(0, chars.length == 0 ? 3 : 4);
+                    int randomValue = RandomUtils.nextInt(0, chars == null ? 3 : 4);
                     switch (randomValue) {
                         case 0:
                             return LETTERS.charAt(RandomUtils.nextInt(0, LETTERS.length()));
@@ -33,7 +33,7 @@ public class SymbolicallyPasswordGenerator implements PasswordGenerator {
                             return chars[RandomUtils.nextInt(0, chars.length)];
                     }
                 } else {
-                    int randomValue = RandomUtils.nextInt(0, chars.length == 0 ? 2 : 3);
+                    int randomValue = RandomUtils.nextInt(0, chars == null ? 2 : 3);
                     switch (randomValue) {
                         case 0:
                             return LETTERS.charAt(RandomUtils.nextInt(0, LETTERS.length()));
@@ -44,7 +44,7 @@ public class SymbolicallyPasswordGenerator implements PasswordGenerator {
                     }
                 }
             } else {
-                int randomValue = RandomUtils.nextInt(0, chars.length == 0 ? 1 : 2);
+                int randomValue = RandomUtils.nextInt(0, chars == null ? 1 : 2);
                 switch (randomValue) {
                     case 0:
                         return LETTERS.charAt(RandomUtils.nextInt(0, LETTERS.length()));
@@ -54,7 +54,7 @@ public class SymbolicallyPasswordGenerator implements PasswordGenerator {
             }
         } else if (numeric) {
             if (special) {
-                int randomValue = RandomUtils.nextInt(0, chars.length == 0 ? 2 : 3);
+                int randomValue = RandomUtils.nextInt(0, chars == null ? 2 : 3);
                 switch (randomValue) {
                     case 0:
                         return NUMBERS.charAt(RandomUtils.nextInt(0, NUMBERS.length()));
@@ -64,7 +64,7 @@ public class SymbolicallyPasswordGenerator implements PasswordGenerator {
                         return chars[RandomUtils.nextInt(0, chars.length)];
                 }
             } else {
-                int randomValue = RandomUtils.nextInt(0, chars.length == 0 ? 1 : 2);
+                int randomValue = RandomUtils.nextInt(0, chars == null ? 1 : 2);
                 switch (randomValue) {
                     case 0:
                         return NUMBERS.charAt(RandomUtils.nextInt(0, NUMBERS.length()));
@@ -74,7 +74,7 @@ public class SymbolicallyPasswordGenerator implements PasswordGenerator {
             }
 
         } else {
-            int randomValue = RandomUtils.nextInt(0, chars.length == 0 ? 1 : 2);
+            int randomValue = RandomUtils.nextInt(0, chars == null ? 1 : 2);
             switch (randomValue) {
                 case 0:
                     return SPECIALS.charAt(RandomUtils.nextInt(0, SPECIALS.length()));
