@@ -73,7 +73,7 @@ public class ConsoleController implements Runnable {
             System.err.println("Minimal length must be <= maximal length");
             System.exit(1);
         }
-        if (!alphabetic && !numeric && !special && (additional == null || additional.length() == 0)) {
+        if (!alphabetic && !numeric && !special && (additional == null || additional.isEmpty())) {
             System.err.println("Unable to create a password without symbols");
             System.exit(1);
         }

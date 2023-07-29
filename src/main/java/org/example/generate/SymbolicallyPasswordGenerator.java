@@ -9,6 +9,9 @@ public class SymbolicallyPasswordGenerator implements PasswordGenerator {
 
     @Override
     public String generate(GeneratorRules rules) {
+        if(rules.getMinLength() > rules.getMaxLength() || rules.getMaxLength() <= 0) {
+            throw new IllegalArgumentException();
+        }
         int length = RandomUtils.nextInt(rules.getMinLength(), rules.getMaxLength() + 1);
         StringBuilder mockup = new StringBuilder(length);
         for (int i = 0; i < length; i++) {
